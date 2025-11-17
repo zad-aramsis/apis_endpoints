@@ -328,7 +328,6 @@ Verifies if a JWT token is correctly signed and still valid (not expired).
     "result": {
         "status": "success",
         "message": "Valid Token.",
-        "employee": "hr.employee(15,)",
         "employee_id": 15,
         "employee_code": "EMP0015",
         "exp_time": "2025-01-05T12:30:00Z"
