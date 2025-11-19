@@ -1,37 +1,34 @@
-# Employee Mobile API – Postman & Configuration Guide
+# Mobile Integration APIs – Postman Guide
 
-Secure mobile integration for employee login and profile access using JWT and JSON-RPC. Use this guide to configure system parameters, understand security, and test all endpoints from Postman.
-
----
-
-## 📋 Quick Summary
-
-### 🔒 Security Overview
-- JWT tokens signed with a configurable **SECRET KEY**
-- Token lifetime controlled by **TOKEN EXP HOURS**
-- Integration settings and sensitive employee token fields are visible only to **Integration Admin** group
-
-### 🚀 Postman Flow
-1. **Register** employee (one time per employee)
-2. **Login** to receive JWT token
-3. **Verify** token if needed
-4. **Get Profile** using the token
-5. **Change Password** (optional)
-6. **Logout** to invalidate token
+Secure Mobile Integration for Employee Using JWT Tokens and JSON‑RPC Protocol..
 
 ---
 
-## 🌐 Base URL & Headers
+### 1. Base URL & Headers
 
 Replace `https://your-domain.com` with your actual Odoo server URL.
 
-- **Method**: `POST`
-- **Base URL**: `https://your-domain.com/employee/<endpoint>`
-- **Content-Type**: `application/json`
+<div style="display:flex; flex-wrap:wrap; gap:16px; font-size:13px;">
 
-### JSON-RPC Envelope
+<div>
 
-All endpoints use the following JSON-RPC envelope:
+<span style="display:inline-block; padding:2px 8px; border-radius:999px; background:#e3f2fd; color:#1565c0;">
+POST </span>
+<span style="margin-left:8px;">`https://your-domain.com/employee/<endpoint>`</span>
+
+</div>
+
+<div>
+
+<span style="display:inline-block; padding:2px 8px; border-radius:999px; background:#e8f5e9; color:#2e7d32;">
+Content-Type </span>
+<span style="margin-left:8px;">`application/json`</span>
+
+</div>
+
+</div>
+
+**JSON‑RPC envelope (for all endpoints):**
 
 ```json
 {
@@ -41,19 +38,30 @@ All endpoints use the following JSON-RPC envelope:
         // put your fields here
     }
 }
+                
 ```
 
----
+</div>
 
-## 📍 API Endpoints
+</div>
 
-### 1. Employee Registration
+</div>
 
-**Endpoint**: `/employee/register`
+<div class="oe_row oe_spaced">
 
-One-time registration for an existing employee. The record is matched by `employee_code` + `national_id`. On success, the **employee_pass** is securely hashed and stored.
+<div class="oe_span12">
 
-#### Request Body
+<div style="border:1px solid #ddd; border-radius:8px; padding:16px;">
+
+### 2. Employee Registration
+
+URL: `/employee/register`
+
+One‑time registration for an existing employee. The record is matched by
+`employee_code` + `national_id`. On success, the **employee_pass** is
+securely hashed and stored.
+
+#### Request – Postman Body (raw → JSON)
 
 ```json
 {
@@ -66,6 +74,7 @@ One-time registration for an existing employee. The record is matched by `employ
         "national_id": "29901012233445"
     }
 }
+                
 ```
 
 #### Success Response
@@ -81,107 +90,75 @@ One-time registration for an existing employee. The record is matched by `employ
         "national_id": "29901012233445"
     }
 }
+                
 ```
 
-#### Possible Error Responses
+#### Failure Responses (inside `result`)
 
 ```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "All Fields are Required."
-    }
+    "status": "failed",
+    "message": "All Fields are Required."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Passwords do Not Match."
-    }
+    "status": "failed",
+    "message": "Passwords do Not Match."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Code Not Found With this National ID."
-    }
+    "status": "failed",
+    "message": "Employee Code Not Found With this National ID."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Code Already Registered."
-    }
+    "status": "failed",
+    "message": "Employee Code Already Registered."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Code Already Terminated."
-    }
+    "status": "failed",
+    "message": "Employee Code Already Terminated."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Code Already Resigned."
-    }
+    "status": "failed",
+    "message": "Employee Code Already Resigned."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Code Not Active."
-    }
+    "status": "failed",
+    "message": "Employee Code Not Active."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Unexpected Error During Registration, Details: <error details>"
-    }
+    "status": "failed",
+    "message": "Unexpected Error During Registration, Details: <error details>"
 }
+                
 ```
 
----
+</div>
 
-### 2. Employee Login
+</div>
 
-**Endpoint**: `/employee/login`
+</div>
 
-Validates the employee password and returns a signed JWT token. The token is saved in `hr.employee.token_key` with `token_date` for auditing.
+<div class="oe_row oe_spaced">
 
-#### Request Body
+<div class="oe_span12">
+
+<div style="border:1px solid #ddd; border-radius:8px; padding:16px;">
+
+### 3. Employee Login
+
+URL: `/employee/login`
+
+Validates the employee password and returns a signed JWT token. The
+token is saved in `hr.employee.token_key` with `token_date` for
+auditing.
+
+#### Request – Postman Body (raw → JSON)
 
 ```json
 {
@@ -192,6 +169,7 @@ Validates the employee password and returns a signed JWT token. The token is sav
         "employee_pass": "123456"
     }
 }
+                
 ```
 
 #### Success Response
@@ -207,107 +185,74 @@ Validates the employee password and returns a signed JWT token. The token is sav
         "employee_token": "jwt_token_string_here"
     }
 }
+                
 ```
 
-#### Possible Error Responses
+#### Failure Responses (inside `result`)
 
 ```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Code and Password Required."
-    }
+    "status": "failed",
+    "message": "Employee Code and Password Required."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Code Not Found."
-    }
+    "status": "failed",
+    "message": "Employee Code Not Found."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Code Not Registered."
-    }
+    "status": "failed",
+    "message": "Employee Code Not Registered."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Code Already Terminated."
-    }
+    "status": "failed",
+    "message": "Employee Code Already Terminated."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Code Already Resigned."
-    }
+    "status": "failed",
+    "message": "Employee Code Already Resigned."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Code Not Active."
-    }
+    "status": "failed",
+    "message": "Employee Code Not Active."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Invalid Password."
-    }
+    "status": "failed",
+    "message": "Invalid Password."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Unexpected Error During Login, Details: <error details>"
-    }
+    "status": "failed",
+    "message": "Unexpected Error During Login, Details: <error details>"
 }
+                
 ```
 
----
+</div>
 
-### 3. Employee Verify
+</div>
 
-**Endpoint**: `/employee/verify`
+</div>
 
-Verifies if a JWT token is correctly signed and still valid (not expired).
+<div class="oe_row oe_spaced">
 
-#### Request Body
+<div class="oe_span12">
+
+<div style="border:1px solid #ddd; border-radius:8px; padding:16px;">
+
+### 4. Employee Verify
+
+URL: `/employee/verify`
+
+Verifies if a JWT token is correctly signed and still valid (not
+expired).
+
+#### Request – Postman Body (raw → JSON)
 
 ```json
 {
@@ -317,6 +262,7 @@ Verifies if a JWT token is correctly signed and still valid (not expired).
         "employee_token": "jwt_token_string_here"
     }
 }
+                
 ```
 
 #### Success Response
@@ -333,129 +279,85 @@ Verifies if a JWT token is correctly signed and still valid (not expired).
         "exp_time": "2025-01-05T12:30:00Z"
     }
 }
+                
 ```
 
-#### Possible Error Responses
+#### Failure Responses (inside `result`)
 
 ```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Authentication Token is Required."
-    }
+    "status": "failed",
+    "message": "Authentication Token is Required."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Expired Token."
-    }
+    "status": "failed",
+    "message": "Expired Token."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Invalid Token."
-    }
+    "status": "failed",
+    "message": "Invalid Token."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Not Found."
-    }
+    "status": "failed",
+    "message": "Employee Not Found."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Not Registered."
-    }
+    "status": "failed",
+    "message": "Employee Not Registered."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Already Terminated."
-    }
+    "status": "failed",
+    "message": "Employee Already Terminated."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Already Resigned."
-    }
+    "status": "failed",
+    "message": "Employee Already Resigned."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Not Active."
-    }
+    "status": "failed",
+    "message": "Employee Not Active."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "The Token Doesn't Match With Current Employee Token."
-    }
+    "status": "failed",
+    "message": "The Token Doesn't Match With Current Employee Token."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Unexpected Error, Details: <error details>"
-    }
+    "status": "failed",
+    "message": "Unexpected Error, Details: <error details>"
 }
+                
 ```
 
----
+</div>
 
-### 4. Employee Change Password
+</div>
 
-**Endpoint**: `/employee/change`
+</div>
 
-Allows an authenticated employee to change their password. Requires a valid JWT token, the current password, and the new password with confirmation.
+<div class="oe_row oe_spaced">
 
-#### Request Body
+<div class="oe_span12">
+
+<div style="border:1px solid #ddd; border-radius:8px; padding:16px;">
+
+### 5. Employee Change
+
+URL: `/employee/change`
+
+Allows an authenticated employee to change their password. Requires a
+valid JWT token, the current password, and the new password with
+confirmation.
+
+#### Request – Postman Body (raw → JSON)
 
 ```json
 {
@@ -468,6 +370,7 @@ Allows an authenticated employee to change their password. Requires a valid JWT 
         "confirm_employee_pass": "newpassword123"
     }
 }
+                
 ```
 
 #### Success Response
@@ -481,173 +384,104 @@ Allows an authenticated employee to change their password. Requires a valid JWT 
         "message": "Change Successfully."
     }
 }
+                
 ```
 
-#### Possible Error Responses
+#### Failure Responses (inside `result`)
 
 ```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Authentication Token is Required."
-    }
+    "status": "failed",
+    "message": "Authentication Token is Required."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "All Fields are Required."
-    }
+    "status": "failed",
+    "message": "All Fields are Required."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Passwords do Not Match."
-    }
+    "status": "failed",
+    "message": "Passwords do Not Match."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Old and New Passwords are Same."
-    }
+    "status": "failed",
+    "message": "Old and New Passwords are Same."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Invalid Old Password."
-    }
+    "status": "failed",
+    "message": "Invalid Old Password."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Expired Token."
-    }
+    "status": "failed",
+    "message": "Expired Token."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Invalid Token."
-    }
+    "status": "failed",
+    "message": "Invalid Token."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Not Found."
-    }
+    "status": "failed",
+    "message": "Employee Not Found."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Not Registered."
-    }
+    "status": "failed",
+    "message": "Employee Not Registered."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Already Terminated."
-    }
+    "status": "failed",
+    "message": "Employee Already Terminated."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Already Resigned."
-    }
+    "status": "failed",
+    "message": "Employee Already Resigned."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Not Active."
-    }
+    "status": "failed",
+    "message": "Employee Not Active."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "The Token Doesn't Match With Current Employee Token."
-    }
+    "status": "failed",
+    "message": "The Token Doesn't Match With Current Employee Token."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Unexpected Error, Details: <error details>"
-    }
+    "status": "failed",
+    "message": "Unexpected Error, Details: <error details>"
 }
+                
 ```
 
----
+</div>
 
-### 5. Employee Logout
+</div>
 
-**Endpoint**: `/employee/logout`
+</div>
 
-Logs out the employee by invalidating the stored JWT token (`token_key` and `token_date` are cleared).
+<div class="oe_row oe_spaced">
 
-#### Request Body
+<div class="oe_span12">
+
+<div style="border:1px solid #ddd; border-radius:8px; padding:16px;">
+
+### 6. Employee Logout
+
+URL: `/employee/logout`
+
+Logs out the employee by invalidating the stored JWT token (`token_key`
+and `token_date` are cleared).
+
+#### Request – Postman Body (raw → JSON)
 
 ```json
 {
@@ -657,6 +491,7 @@ Logs out the employee by invalidating the stored JWT token (`token_key` and `tok
         "employee_token": "jwt_token_string_here"
     }
 }
+                
 ```
 
 #### Success Response
@@ -670,129 +505,198 @@ Logs out the employee by invalidating the stored JWT token (`token_key` and `tok
         "message": "Logout Successfully."
     }
 }
+                
 ```
 
-#### Possible Error Responses
+#### Failure Responses (inside `result`)
 
 ```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Authentication Token is Required."
-    }
+    "status": "failed",
+    "message": "Authentication Token is Required."
 }
+
+{
+    "status": "failed",
+    "message": "Expired Token."
+}
+
+{
+    "status": "failed",
+    "message": "Invalid Token."
+}
+
+{
+    "status": "failed",
+    "message": "Employee Not Found."
+}
+
+{
+    "status": "failed",
+    "message": "Employee Not Registered."
+}
+
+{
+    "status": "failed",
+    "message": "Employee Already Terminated."
+}
+
+{
+    "status": "failed",
+    "message": "Employee Already Resigned."
+}
+
+{
+    "status": "failed",
+    "message": "Employee Not Active."
+}
+
+{
+    "status": "failed",
+    "message": "The Token Doesn't Match With Current Employee Token."
+}
+
+{
+    "status": "failed",
+    "message": "Unexpected Error, Details: <error details>"
+}
+                
 ```
+
+</div>
+
+</div>
+
+</div>
+
+<div class="oe_row oe_spaced">
+
+<div class="oe_span12">
+
+<div style="border:1px solid #ddd; border-radius:8px; padding:16px;">
+
+### 7. Employee Photo
+
+URL: `/employee/photo`
+
+Returns the employee's profile photo as an image file. This endpoint
+validates the JWT token and returns the binary image data with
+appropriate headers for caching and content type detection. If no photo
+is available, a default image is returned.
+
+#### Request – HTTP GET with Query Parameter
+
+```
+GET /employee/photo?employee_token=jwt_token_string_here
+                
+```
+
+#### Success Response
+
+Returns binary image data with headers:
+
+```
+Content-Type: image/png (or image/jpeg based on actual image format)
+Cache-Control: public, max-age=86400
+Content-Length: [size in bytes]
+
+[Binary Image Data]
+                
+```
+
+#### Usage Example
+
+```
+<img src="https://example.com/employee/photo?employee_token=jwt_token_string_here" alt="Employee Photo" />
+                
+```
+
+#### Failure Responses (JSON)
 
 ```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Expired Token."
-    }
+    "status": "failed",
+    "message": "Authentication Token is Required."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Invalid Token."
-    }
+    "status": "failed",
+    "message": "Expired Token."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Not Found."
-    }
+    "status": "failed",
+    "message": "Invalid Token."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Not Registered."
-    }
+    "status": "failed",
+    "message": "Employee Not Found."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Already Terminated."
-    }
+    "status": "failed",
+    "message": "Employee Not Registered."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Already Resigned."
-    }
+    "status": "failed",
+    "message": "Employee Already Terminated."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Not Active."
-    }
+    "status": "failed",
+    "message": "Employee Already Resigned."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "The Token Doesn't Match With Current Employee Token."
-    }
+    "status": "failed",
+    "message": "Employee Not Active."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Unexpected Error, Details: <error details>"
-    }
+    "status": "failed",
+    "message": "The Token Doesn't Match With Current Employee Token."
 }
+
+{
+    "status": "failed",
+    "message": "Unexpected Error, Details: <error details>"
+}
+                
 ```
 
----
+#### Notes
 
-### 6. Employee Profile
+- This is an HTTP GET endpoint (not JSON-RPC)
+- The token is passed as a query parameter in the URL
+- On success, returns actual binary image data (not JSON)
+- Images are cached for 24 hours (86400 seconds)
+- Content-Type is automatically detected (PNG, JPEG, etc.)
+- If the employee has no photo, a default image is returned
+- All token validation rules apply (active, not terminated, not
+  resigned, etc.)
 
-**Endpoint**: `/employee/profile`
+</div>
 
-Returns the employee profile associated with the token. The token must come from `/employee/login`.
+</div>
 
-#### Request Body
+</div>
+
+<div class="oe_row oe_spaced">
+
+<div class="oe_span12">
+
+<div style="border:1px solid #ddd; border-radius:8px; padding:16px; margin-bottom:24px;">
+
+### 8. Employee Profile
+
+URL: `/employee/profile`
+
+Returns the employee profile associated with the token. The token must
+come from `/employee/login`.
+
+#### Request – Postman Body (raw → JSON)
 
 ```json
 {
@@ -802,6 +706,7 @@ Returns the employee profile associated with the token. The token must come from
         "employee_token": "jwt_token_string_here"
     }
 }
+                
 ```
 
 #### Success Response Example
@@ -816,7 +721,7 @@ Returns the employee profile associated with the token. The token must come from
         "employee_general_information": {
             "preferred_name": "Administrator",
             "employee_Code": "MP0015",
-            "employee_url_photo": "https://example.com/web/image/hr.employee/1/image_1920"
+            "employee_url_photo": "https://example.com/employee/photo?employee_token=jwt_token_string_here"
         },
         "employee_personal_information": {
             "maritalStatus": "Married",
@@ -854,168 +759,107 @@ Returns the employee profile associated with the token. The token must come from
                     "national_id": "31701012233448"
                 }
             ]
+        },
+        "employee_professional_information": {
+            "hiringDate": "2020-01-15",
+            "contractStartDate": "2020-01-15",
+            "country": "Egypt",
+            "sector": "Technology",
+            "company": "Example Company Ltd.",
+            "department": "Information Technology",
+            "division": "Software Development",
+            "section": "Backend Development",
+            "unit": "API Development",
+            "subUnit": "Core Services",
+            "position": "Senior Software Developer",
+            "location": "Cairo Office"
         }
     }
 }
+                
 ```
 
-#### Possible Error Responses
+#### Failure Responses (inside `result`)
 
 ```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Authentication Token is Required."
-    }
+    "status": "failed",
+    "message": "Authentication Token is Required."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Expired Token."
-    }
+    "status": "failed",
+    "message": "Expired Token."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Invalid Token."
-    }
+    "status": "failed",
+    "message": "Invalid Token."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Not Found."
-    }
+    "status": "failed",
+    "message": "Employee Not Found."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Not Registered."
-    }
+    "status": "failed",
+    "message": "Employee Not Registered."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Already Terminated."
-    }
+    "status": "failed",
+    "message": "Employee Already Terminated."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Already Resigned."
-    }
+    "status": "failed",
+    "message": "Employee Already Resigned."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Employee Not Active."
-    }
+    "status": "failed",
+    "message": "Employee Not Active."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "The Token Doesn't Match With Current Employee Token."
-    }
+    "status": "failed",
+    "message": "The Token Doesn't Match With Current Employee Token."
 }
-```
 
-```json
 {
-    "jsonrpc": "2.0",
-    "id": null,
-    "result": {
-        "status": "failed",
-        "message": "Unexpected Error, Details: <error details>"
-    }
+    "status": "failed",
+    "message": "Unexpected Error, Details: <error details>"
 }
+                
 ```
 
----
+#### Notes
 
-## ⚙️ Configuration & Security (Integration Admin Only)
+- The endpoint `/employee/profile` returns the full combined profile,
+  including:
+  - **employee_general_information**
+  - **employee_personal_information**
+  - **employee_professional_information**
+- Three additional endpoints are available to retrieve individual
+  sections separately:
+  - `/employee/general` → returns only **employee_general_information**
+  - `/employee/personal` → returns only
+    **employee_personal_information**
+  - `/employee/professional` → returns only
+    **employee_professional_information**
+- All three endpoints follow the same JSON-RPC structure and the same
+  validation rules: (token required, active employee, not resigned, not
+  terminated, etc.).
+- All single-section endpoints return success and failure responses with
+  the **same JSON format** used by `/employee/profile`.
+- The token is validated exactly the same way as all other secured
+  endpoints.
 
-All configuration and internal token fields are protected. Only users in group **Integration Admin** can see and edit them.
+</div>
 
-### Settings → Integration Parameters
+</div>
 
-In **Settings → Employees** a block is added with two fields:
+</div>
 
-- **SECRET KEY** – Used to sign/verify JWT tokens. Changing it will immediately invalidate all existing tokens.
-- **TOKEN EXP HOURS** – Controls for how many hours a token remains valid (e.g., `24` hours).
-
-### Employee Form → "Mobile Integration" Tab
-
-The employee form includes an additional tab to inspect the mobile integration state. This tab is also restricted to **Integration Admin**.
-
-- **Mobile Active** – Indicates whether the employee has completed mobile registration. If disabled, the employee is considered not registered and cannot log into the mobile application.
-- **Employee Code** – A unique identifier assigned to the employee and used as the primary reference for authentication through the API.
-- **Employee Password** – A securely hashed credential stored for mobile login. The system never saves the plain-text password.
-- **Token Key** – The most recently issued JWT access token associated with the employee. This value is updated each time the employee logs in.
-- **Token Date** – The UTC timestamp indicating when the current access token was created. Useful for tracking token validity and activity.
-
-> **Note**: With this setup, developers and admins in the Integration Admin group can fully control and audit the JWT behavior, while regular users and HR officers see none of the sensitive token details.
-
----
-
-## 🧪 Testing with Postman
-
-1. **Import Collection**: Create a new Postman collection with the endpoints listed above
-2. **Set Environment Variables**:
-   - `base_url`: Your Odoo instance URL
-   - `employee_token`: Store the token from login response
-3. **Test Flow**:
-   - Register a new employee
-   - Login to get the token
-   - Use the token to verify, get profile, change password, or logout
-
----
-
-## 🔐 Security Best Practices
-
-- Store the **SECRET KEY** securely and never commit it to version control
-- Use HTTPS in production to protect tokens in transit
-- Set appropriate **TOKEN EXP HOURS** based on your security requirements
-- Regularly audit token usage through the **Token Date** field
-- Implement rate limiting on authentication endpoints
-- Monitor failed login attempts
+</div>
