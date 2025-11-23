@@ -87,6 +87,7 @@ securely hashed and stored.
         "status": "success",
         "message": "Registration Successfully.",
         "employee_id": 15,
+        "employee_code": "EMP0015",
         "national_id": "29901012233445"
     }
 }
@@ -182,6 +183,7 @@ auditing.
         "status": "success",
         "message": "Login Successfully.",
         "employee_id": 15,
+        "employee_code": "EMP0015",
         "employee_token": "jwt_token_string_here"
     }
 }
@@ -332,7 +334,7 @@ expired).
 
 {
     "status": "failed",
-    "message": "Unexpected Error, Details: <error details>"
+    "message": "Unexpected Error During Verify Token, Details: <error details>"
 }
                 
 ```
@@ -457,7 +459,12 @@ confirmation.
 
 {
     "status": "failed",
-    "message": "Unexpected Error, Details: <error details>"
+    "message": "Unexpected Error During Verify Token, Details: <error details>"
+}
+
+{
+    "status": "failed",
+    "message": "Unexpected Error During Change Password, Details: <error details>"
 }
                 
 ```
@@ -558,7 +565,12 @@ and `token_date` are cleared).
 
 {
     "status": "failed",
-    "message": "Unexpected Error, Details: <error details>"
+    "message": "Unexpected Error During Verify Token, Details: <error details>"
+}
+
+{
+    "status": "failed",
+    "message": "Unexpected Error During Logout, Details: <error details>"
 }
                 
 ```
@@ -714,7 +726,7 @@ Content-Length: [size in bytes]
 
 <div class="oe_span12">
 
-<div style="border:1px solid #ddd; border-radius:8px; padding:16px; margin-bottom:24px;">
+<div style="border:1px solid #ddd; border-radius:8px; padding:16px;">
 
 ### 8. Employee Home
 
@@ -745,9 +757,13 @@ the authentication token. The token must come from `/employee/login`.
     "result": {
         "status": "success",
         "message": "Employee Home Retrieved Successfully",
+        "employee_id": 15,
         "employee_code": "MP0015",
         "preferred_name": "Administrator",
-        "general_shift": "General Shift A",
+        "general_shift": {
+            "id": 6,
+            "name": "General Shift A"
+        },
         "employee_url_photo": "https://example.com/employee/photo?employee_token=jwt_token_string_here"
     }
 }
@@ -824,7 +840,7 @@ the authentication token. The token must come from `/employee/login`.
 
 <div class="oe_span12">
 
-<div style="border:1px solid #ddd; border-radius:8px; padding:16px; margin-bottom:24px;">
+<div style="border:1px solid #ddd; border-radius:8px; padding:16px;">
 
 ### 9. Employee Profile
 
@@ -856,6 +872,7 @@ come from `/employee/login`.
         "status": "success",
         "message": "Employee Profile Retrieved Successfully",
         "employee_general_information": {
+            "employee_id": 15,
             "employee_code": "MP0015",
             "preferred_name": "Administrator",
             "fullEnglishName": "A B C D",
@@ -863,6 +880,8 @@ come from `/employee/login`.
             "employee_url_photo": "https://example.com/employee/photo?employee_token=jwt_token_string_here"
         },
         "employee_personal_information": {
+            "employee_id": 15,
+            "employee_code": "MP0015",
             "maritalStatus": "Married",
             "currentDetailedAddressArabic": "العنوان الحالي بالتفصيل",
             "nationalIDDetailedAddressArabic": "عنوان البطاقة الوطنية",
@@ -900,6 +919,8 @@ come from `/employee/login`.
             ]
         },
         "employee_professional_information": {
+            "employee_id": 15,
+            "employee_code": "MP0015",
             "hiringDate": "2020-01-15",
             "contractStartDate": "2020-01-15",
             "country": "Egypt",
@@ -914,6 +935,8 @@ come from `/employee/login`.
             "location": "Cairo Office"
         },
         "employee_hierarchical": {
+            "employee_id": 15,
+            "employee_code": "MP0015",
             "managers_list": [
                 {
                     "employee_id": 5,
@@ -1029,7 +1052,7 @@ come from `/employee/login`.
 
 <div class="oe_span12">
 
-<div style="border:1px solid #ddd; border-radius:8px; padding:16px; margin-bottom:24px;">
+<div style="border:1px solid #ddd; border-radius:8px; padding:16px;">
 
 ### 10. Employee General
 
@@ -1059,6 +1082,7 @@ Returns the general information section of the employee profile.
     "result": {
         "status": "success",
         "message": "Employee General Retrieved Successfully",
+        "employee_id": 15,
         "employee_code": "MP0015",
         "preferred_name": "Administrator",
         "fullEnglishName": "A B C D",
@@ -1139,7 +1163,7 @@ Returns the general information section of the employee profile.
 
 <div class="oe_span12">
 
-<div style="border:1px solid #ddd; border-radius:8px; padding:16px; margin-bottom:24px;">
+<div style="border:1px solid #ddd; border-radius:8px; padding:16px;">
 
 ### 11. Employee Personal
 
@@ -1169,6 +1193,8 @@ Returns the personal information section of the employee profile.
     "result": {
         "status": "success",
         "message": "Employee Personal Retrieved Successfully",
+        "employee_id": 15,
+        "employee_code": "MP0015",
         "maritalStatus": "Married",
         "currentDetailedAddressArabic": "العنوان الحالي بالتفصيل",
         "nationalIDDetailedAddressArabic": "عنوان البطاقة الوطنية",
@@ -1279,7 +1305,7 @@ Returns the personal information section of the employee profile.
 
 <div class="oe_span12">
 
-<div style="border:1px solid #ddd; border-radius:8px; padding:16px; margin-bottom:24px;">
+<div style="border:1px solid #ddd; border-radius:8px; padding:16px;">
 
 ### 12. Employee Professional
 
@@ -1309,6 +1335,8 @@ Returns the professional information section of the employee profile.
     "result": {
         "status": "success",
         "message": "Employee Professional Retrieved Successfully",
+        "employee_id": 15,
+        "employee_code": "MP0015",
         "hiringDate": "2020-01-15",
         "contractStartDate": "2020-01-15",
         "country": "Egypt",
@@ -1396,7 +1424,7 @@ Returns the professional information section of the employee profile.
 
 <div class="oe_span12">
 
-<div style="border:1px solid #ddd; border-radius:8px; padding:16px; margin-bottom:24px;">
+<div style="border:1px solid #ddd; border-radius:8px; padding:16px;">
 
 ### 13. Employee Hierarchical
 
@@ -1429,6 +1457,8 @@ includes ID, code, name, position, and photo URL.
     "result": {
         "status": "success",
         "message": "Employee Hierarchical Retrieved Successfully",
+        "employee_id": 15,
+        "employee_code": "MP0015",
         "managers_list": [
             {
                 "employee_id": 5,
@@ -1546,6 +1576,179 @@ includes ID, code, name, position, and photo URL.
   reports
 
 </div>
+
+</div>
+
+</div>
+
+<div class="oe_row oe_spaced">
+
+<div class="oe_span12">
+
+<div style="border:1px solid #ddd; border-radius:8px; padding:16px;">
+
+### 14. Employee GEO Location
+
+URL: `/employee/geo_location`
+
+Returns the employee's valid geographic location information for
+attendance purposes based on a specific date. This endpoint checks if
+geo attendance is enabled for the employee and retrieves all valid
+location assignments for the provided today date for location details.
+
+#### Request – Postman Body (raw → JSON)
+
+```json
+{
+    "jsonrpc": "2.0",
+    "method": "call",
+    "params": {
+        "employee_token": "jwt_token_string_here",
+        "today_date": "2024-01-15"
+    }
+}
+                
+```
+
+#### Success Response Example
+
+```json
+
+{
+    "jsonrpc": "2.0",
+    "id": null,
+    "result": {
+        "status": "success",
+        "message": "Employee GEO Location Retrieved Successfully",
+        "employee_id": 15,
+        "employee_code": "MP0015",
+        "locations_list": [
+            {
+                "location_free": false,
+                "geo_enabled": true,
+                "date_from": "2024-01-01",
+                "date_to": "2024-12-31",
+                "working_location": {
+                    "location_id": 7,
+                    "location_name": "Cairo Main Office",
+                    "location_code": "CMO-001",
+                    "location_address": "123 Tahrir Square, Cairo, Egypt",
+                    "location_geo_enabled": true,
+                    "latitude": "30.0444",
+                    "longitude": "31.2357",
+                    "range": "100"
+                }
+            },
+            {
+                "location_free": true,
+                "geo_enabled": false,
+                "date_from": "2024-01-01",
+                "date_to": "2024-12-31",
+                "working_location": {
+                    "location_id": 12,
+                    "location_name": "Remote Work",
+                    "location_code": "RMT-001",
+                    "location_address": "Remote Location",
+                    "location_geo_enabled": false,
+                    "latitude": "",
+                    "longitude": "",
+                    "range": ""
+                }
+            }
+        ]
+    }
+}
+                
+```
+
+#### Failure Responses (inside `result`)
+
+```json
+{
+    "status": "failed",
+    "message": "Authentication Token is Required."
+}
+
+{
+    "status": "failed",
+    "message": "Today Date is Required."
+}
+
+{
+    "status": "failed",
+    "message": "Expired Token."
+}
+
+{
+    "status": "failed",
+    "message": "Invalid Token."
+}
+
+{
+    "status": "failed",
+    "message": "Employee Not Found."
+}
+
+{
+    "status": "failed",
+    "message": "Employee Not Registered."
+}
+
+{
+    "status": "failed",
+    "message": "Employee Already Terminated."
+}
+
+{
+    "status": "failed",
+    "message": "Employee Already Resigned."
+}
+
+{
+    "status": "failed",
+    "message": "Employee Not Active."
+}
+
+{
+    "status": "failed",
+    "message": "The Token Doesn't Match With Current Employee Token."
+}
+
+{
+    "status": "failed",
+    "message": "Unexpected Error During Verify Token, Details: <error details>"
+}
+
+{
+    "status": "failed",
+    "message": "Geo Attendance Currently Not Allowed for this Employee."
+}
+
+{
+    "status": "failed",
+    "message": "No Valid Location Found for Today's Date."
+}
+
+{
+    "status": "failed",
+    "message": "Unexpected Error During Get GEO Location, Details: <error details>"
+}
+                
+```
+
+#### Notes
+
+- This endpoint validates that geo attendance is enabled for the
+  employee before returning location data
+- Multiple locations may be returned if the employee has multiple valid
+  location assignments for the date
+- The date must fall within the `date_from` and `date_to` (or be
+  open-ended) range of the location assignment
+- If `location_geo_enabled` is false, latitude, longitude, and range
+  fields will be empty strings
+- The `range` value is in meters and defines the geofence radius
+- Use this endpoint before allowing attendance check-in to validate the
+  employee's location
 
 </div>
 
