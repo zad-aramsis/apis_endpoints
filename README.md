@@ -1743,7 +1743,7 @@ location assignments for the provided today date for location details.
 - Multiple locations may be returned if the employee has multiple valid
   location assignments for the date
 - The date must fall within the `date_from` and `date_to` (or be
-  open-ended) range of the location assignment
+  open-ended) range of the location assignment and must be GEO
 - If `location_geo_enabled` is false, latitude, longitude, and range
   fields will be empty strings
 - The `range` value is in meters and defines the geofence radius
