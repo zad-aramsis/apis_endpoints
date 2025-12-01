@@ -124,11 +124,6 @@ securely hashed and stored.
 
 {
     "status": "failed",
-    "message": "Employee Code Already Resigned."
-}
-
-{
-    "status": "failed",
     "message": "Employee Code Not Active."
 }
 
@@ -211,11 +206,6 @@ auditing.
 {
     "status": "failed",
     "message": "Employee Code Already Terminated."
-}
-
-{
-    "status": "failed",
-    "message": "Employee Code Already Resigned."
 }
 
 {
@@ -315,11 +305,6 @@ expired).
 {
     "status": "failed",
     "message": "Employee Already Terminated."
-}
-
-{
-    "status": "failed",
-    "message": "Employee Already Resigned."
 }
 
 {
@@ -444,11 +429,6 @@ confirmation.
 
 {
     "status": "failed",
-    "message": "Employee Already Resigned."
-}
-
-{
-    "status": "failed",
     "message": "Employee Not Active."
 }
 
@@ -546,11 +526,6 @@ and `token_date` are cleared).
 {
     "status": "failed",
     "message": "Employee Already Terminated."
-}
-
-{
-    "status": "failed",
-    "message": "Employee Already Resigned."
 }
 
 {
@@ -675,11 +650,6 @@ Content-Length: [size in bytes]
 
 {
     "status": "failed",
-    "message": "Employee Already Resigned."
-}
-
-{
-    "status": "failed",
     "message": "Employee Not Active."
 }
 
@@ -708,8 +678,7 @@ Content-Length: [size in bytes]
 - Images are cached for 24 hours (86400 seconds)
 - Content-Type is automatically detected (PNG, JPEG, etc.)
 - If the employee has no photo, a default image is returned
-- All token validation rules apply (active, not terminated, not
-  resigned, etc.)
+- All token validation rules apply (active, not terminated, etc.)
 - When employee_id is provided, the photo of that specific employee is
   returned (no additional permission checks are performed beyond token
   validation)
@@ -801,11 +770,6 @@ the authentication token. The token must come from `/employee/login`.
 {
     "status": "failed",
     "message": "Employee Already Terminated."
-}
-
-{
-    "status": "failed",
-    "message": "Employee Already Resigned."
 }
 
 {
@@ -1017,11 +981,6 @@ come from `/employee/login`.
 
 {
     "status": "failed",
-    "message": "Employee Already Resigned."
-}
-
-{
-    "status": "failed",
     "message": "Employee Not Active."
 }
 
@@ -1124,11 +1083,6 @@ Returns the general information section of the employee profile.
 {
     "status": "failed",
     "message": "Employee Already Terminated."
-}
-
-{
-    "status": "failed",
-    "message": "Employee Already Resigned."
 }
 
 {
@@ -1270,11 +1224,6 @@ Returns the personal information section of the employee profile.
 
 {
     "status": "failed",
-    "message": "Employee Already Resigned."
-}
-
-{
-    "status": "failed",
     "message": "Employee Not Active."
 }
 
@@ -1385,11 +1334,6 @@ Returns the professional information section of the employee profile.
 {
     "status": "failed",
     "message": "Employee Already Terminated."
-}
-
-{
-    "status": "failed",
-    "message": "Employee Already Resigned."
 }
 
 {
@@ -1534,11 +1478,6 @@ includes ID, code, name, position, and photo URL.
 {
     "status": "failed",
     "message": "Employee Already Terminated."
-}
-
-{
-    "status": "failed",
-    "message": "Employee Already Resigned."
 }
 
 {
@@ -1697,11 +1636,6 @@ location assignments for the provided today date for location details.
 {
     "status": "failed",
     "message": "Employee Already Terminated."
-}
-
-{
-    "status": "failed",
-    "message": "Employee Already Resigned."
 }
 
 {
