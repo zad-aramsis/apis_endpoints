@@ -1660,6 +1660,11 @@ location assignments for the provided today date for location details.
 
 {
     "status": "failed",
+    "message": "Invalid Date Format, Must be in format YYYY-MM-DD with valid month (01–12) and day (01–31)."
+}
+
+{
+    "status": "failed",
     "message": "No Valid Location Found for Today's Date."
 }
 
@@ -1683,6 +1688,206 @@ location assignments for the provided today date for location details.
 - The `range` value is in meters and defines the geofence radius
 - Use this endpoint before allowing attendance check-in to validate the
   employee's location
+
+</div>
+
+</div>
+
+</div>
+
+<div class="oe_row oe_spaced">
+
+<div class="oe_span12">
+
+<div style="border:1px solid #ddd; border-radius:8px; padding:16px;">
+
+### 15. Employee Get Punch
+
+URL: `/employee/get_punch`
+
+Creates a new attendance punch record for an employee with geographic
+location information. This endpoint validates the employee's
+credentials, location data, and creates a punch integration record that
+can be processed for attendance tracking. Supports both location-free
+and location-based punches with IN/OUT punch types.
+
+#### Request – Postman Body (raw → JSON)
+
+```json
+{
+    "jsonrpc": "2.0",
+    "method": "call",
+    "params": {
+        "employee_token": "jwt_token_string_here",
+        "date": "2024-01-15",
+        "time": "08:30",
+        "punch_type": "IN",
+        "location_free": "false",
+        "location_id": 7,
+        "longitude": 31.2357,
+        "latitude": 30.0444
+    }
+}
+                
+```
+
+#### Request Parameters
+
+- **employee_token** (required): JWT authentication token
+- **date** (required): Punch date in YYYY-MM-DD format
+- **time** (required): Punch time in HH:MM format (24-hour, 00:00–23:59)
+- **punch_type** (required): Type of punch - 'IN', 'In', 'in' (check-in)
+  or 'OUT', 'Out', 'out' (check-out)
+- **location_free** (required): Boolean indicating if the punch is
+  location-free - 'true', 'True', '1' or 'false', 'False', '0'
+- **location_id** (required if location_free=false): location ID, Must
+  be an Integer or 0 for null
+- **longitude** (required): Geographic longitude coordinate, Must be
+  Float
+- **latitude** (required): Geographic latitude coordinate, Must be Float
+
+#### Success Response Example
+
+```json
+{
+    "jsonrpc": "2.0",
+    "id": null,
+    "result": {
+        "status": "success",
+        "message": "Employee Get Punch Successfully",
+        "employee_id": 15,
+        "employee_code": "MP0015",
+        "punch_integration_id": 1250
+    }
+}
+                
+```
+
+#### Failure Responses (inside `result`)
+
+```json
+{
+    "status": "failed",
+    "message": "Authentication Token is Required."
+}
+
+{
+    "status": "failed",
+    "message": "Date is Required."
+}
+
+{
+    "status": "failed",
+    "message": "Time is Required."
+}
+
+{
+    "status": "failed",
+    "message": "Punch Type is Required."
+}
+
+{
+    "status": "failed",
+    "message": "Longitude and Latitude is Required."
+}
+
+{
+    "status": "failed",
+    "message": "Expired Token."
+}
+
+{
+    "status": "failed",
+    "message": "Invalid Token."
+}
+
+{
+    "status": "failed",
+    "message": "Employee Not Found."
+}
+
+{
+    "status": "failed",
+    "message": "Employee Not Registered."
+}
+
+{
+    "status": "failed",
+    "message": "Employee Already Terminated."
+}
+
+{
+    "status": "failed",
+    "message": "Employee Not Active."
+}
+
+{
+    "status": "failed",
+    "message": "The Token Doesn't Match With Current Employee Token."
+}
+
+{
+    "status": "failed",
+    "message": "Unexpected Error During Verify Token, Details: <error details>"
+}
+
+{
+    "status": "failed",
+    "message": "Invalid Date Format, Must be in format YYYY-MM-DD with valid month (01–12) and day (01–31)."
+}
+
+{
+    "status": "failed",
+    "message": "Invalid Time Format, Must be in format HH:MM ('00:00' — '23:59')."
+}
+
+{
+    "status": "failed",
+    "message": "Invalid Punch Type, Must be in ('IN', 'In', 'in') or ('OUT', 'Out', 'out')."
+}
+
+{
+    "status": "failed",
+    "message": "Invalid Location Free Value, Must be in ('True', 'true', '1') or ('False', 'false', '0')."
+}
+
+{
+    "status": "failed",
+    "message": "Location is Required."
+}
+
+{
+    "status": "failed",
+    "message": "Invalid Location ID Not Found."
+}
+
+{
+    "status": "failed",
+    "message": "Unexpected Error During Get Punch, Details: <error details>"
+}
+                
+```
+
+#### Notes
+
+- The punch record is created with `status='draft'` and can be processed
+  later by the system
+- Punch type is internally stored as 'F1' (IN) or 'F2' (OUT)
+- Time is converted from HH:MM format to float (hours + minutes/60) for
+  internal storage
+- The `source` field is automatically set to 'geo' for geographic-based
+  punches
+- When `location_free=true`, the `location_id` parameter is optional and
+  will be ignored
+- When `location_free=false`, a valid `location_id` must be provided
+- Longitude and latitude are always required regardless of location_free
+  setting
+- The returned `punch_integration_id` can be used to track or reference
+  this punch record
+- Use the `/employee/geo_location` endpoint first to validate allowed
+  locations before creating a punch
+- Multiple punches can be created for the same employee on the same day
+  (IN/OUT pairs)
 
 </div>
 
