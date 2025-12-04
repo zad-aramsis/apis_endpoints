@@ -855,48 +855,39 @@ come from `/employee/login`.
             "emergencyContactName": "John Doe",
             "emergencyContactMobile": "01234567892",
             "emergencyContactRelation": "Brother",
-            "numberOfWives": 1,
-            "wives": [
+            "gender": "Male",
+            "number_of_husbands": 0,
+            "husband_ids": [],
+            "number_of_wives": 1,
+            "wife_ids": [
                 {
-                    "wife": "1",
+                    "id": 1,
                     "name": "Jane Smith",
+                    "national_id": "29801012233446",
+                    "gender": "Female",
                     "si_status": "Yes",
-                    "national_id": "29801012233446"
+                    "relation": "Spouse"
                 }
             ],
-            "numberOfChildren": 2,
-            "children": [
+            "number_of_children": 2,
+            "children_ids": [
                 {
-                    "child": "1",
+                    "id": 2,
                     "name": "Child One",
+                    "national_id": "31501012233447",
                     "gender": "Male",
                     "si_status": "Yes",
-                    "national_id": "31501012233447"
+                    "relation": "child"
                 },
                 {
-                    "child": "2",
+                    "id": 3,
                     "name": "Child Two",
+                    "national_id": "31701012233448",
                     "gender": "Female",
                     "si_status": "No",
-                    "national_id": "31701012233448"
+                    "relation": "child"
                 }
             ]
-        },
-        "employee_professional_information": {
-            "employee_id": 15,
-            "employee_code": "MP0015",
-            "hiringDate": "2020-01-15",
-            "contractStartDate": "2020-01-15",
-            "country": "Egypt",
-            "sector": "Technology",
-            "company": "Example Company Ltd.",
-            "department": "Information Technology",
-            "division": "Software Development",
-            "section": "Backend Development",
-            "unit": "API Development",
-            "subUnit": "Core Services",
-            "position": "Senior Software Developer",
-            "location": "Cairo Office"
         },
         "employee_hierarchical": {
             "employee_id": 15,
@@ -1158,30 +1149,37 @@ Returns the personal information section of the employee profile.
         "emergencyContactName": "John Doe",
         "emergencyContactMobile": "01234567892",
         "emergencyContactRelation": "Brother",
-        "numberOfWives": 1,
-        "wives": [
+        "gender": "Male",
+        "number_of_husbands": 0,
+        "husband_ids": [],
+        "number_of_wives": 1,
+        "wife_ids": [
             {
-                "wife": "1",
+                "id": 1,
                 "name": "Jane Smith",
+                "national_id": "29801012233446",
+                "gender": "Female",
                 "si_status": "Yes",
-                "national_id": "29801012233446"
+                "relation": "Spouse"
             }
         ],
-        "numberOfChildren": 2,
-        "children": [
+        "number_of_children": 2,
+        "children_ids": [
             {
-                "child": "1",
+                "id": 2,
                 "name": "Child One",
+                "national_id": "31501012233447",
                 "gender": "Male",
                 "si_status": "Yes",
-                "national_id": "31501012233447"
+                "relation": "child"
             },
             {
-                "child": "2",
+                "id": 3,
                 "name": "Child Two",
+                "national_id": "31701012233448",
                 "gender": "Female",
                 "si_status": "No",
-                "national_id": "31701012233448"
+                "relation": "child"
             }
         ]
     }
