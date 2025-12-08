@@ -1892,3 +1892,350 @@ and location-based punches with IN/OUT punch types.
 </div>
 
 </div>
+
+<div class="oe_row oe_spaced">
+
+<div class="oe_span12">
+
+<div style="border:1px solid #ddd; border-radius:8px; padding:16px;">
+
+### 16. Payrolls Get Current Month
+
+URL: `/payroll/current_month`
+
+Retrieves payroll information for an employee for a specific month or
+the most recent month. This endpoint allows filtering by month and year,
+or automatically fetches the latest month's payslips. Returns detailed
+information including total paid amount, number of runs, and individual
+payslip details with net amounts.
+
+#### Request – Postman Body (raw → JSON)
+
+```json
+{
+    "jsonrpc": "2.0",
+    "method": "call",
+    "params": {
+        "employee_token": "jwt_token_string_here",
+        "month": "3",
+        "year": "2024"
+    }
+}
+                
+```
+
+#### Request Parameters
+
+- **employee_token** (required): JWT authentication token
+- **month** (optional): Month number as string (1-12). If not provided,
+  returns the most recent month
+- **year** (optional): Year as string (e.g., "2024"). If not provided,
+  returns the most recent month
+
+#### Success Response Example (with month/year specified)
+
+```json
+{
+    "jsonrpc": "2.0",
+    "id": null,
+    "result": {
+        "status": "success",
+        "message": "Payroll Selected Month Successfully",
+        "month": "3",
+        "year": "2024",
+        "total_paid": 15000.50,
+        "no_runs": 2,
+        "payslips": [
+            {
+                "id": 101,
+                "run_number": "SLIP/2024/03/0001",
+                "net": 7500.25
+            },
+            {
+                "id": 102,
+                "run_number": "SLIP/2024/03/0002",
+                "net": 7500.25
+            }
+        ]
+    }
+}
+                
+```
+
+#### Success Response Example (without month/year - latest month)
+
+```json
+{
+    "jsonrpc": "2.0",
+    "id": null,
+    "result": {
+        "status": "success",
+        "message": "Payroll Current Month Successfully",
+        "month": "4",
+        "year": "2024",
+        "total_paid": 8000.00,
+        "no_runs": 1,
+        "payslips": [
+            {
+                "id": 150,
+                "run_number": "SLIP/2024/12/0001",
+                "net": 8000.00
+            }
+        ]
+    }
+}
+                
+```
+
+#### Failure Responses (inside `result`)
+
+```json
+{
+    "status": "failed",
+    "message": "Authentication Token is Required."
+}
+
+{
+    "status": "failed",
+    "message": "Expired Token."
+}
+
+{
+    "status": "failed",
+    "message": "Invalid Token."
+}
+
+{
+    "status": "failed",
+    "message": "Employee Not Found."
+}
+
+{
+    "status": "failed",
+    "message": "Employee Not Registered."
+}
+
+{
+    "status": "failed",
+    "message": "Employee Already Terminated."
+}
+
+{
+    "status": "failed",
+    "message": "Employee Not Active."
+}
+
+{
+    "status": "failed",
+    "message": "The Token Doesn't Match With Current Employee Token."
+}
+
+{
+    "status": "failed",
+    "message": "Unexpected Error During Verify Token, Details: <error details>"
+}
+
+{
+    "status": "failed",
+    "message": "Payslip is not found."
+}
+
+{
+    "status": "failed",
+    "message": "Unexpected Error During Current Month, Details: <error details>"
+}
+                
+```
+
+#### Notes
+
+- Both `month` and `year` must be provided together, or both omitted
+- If month/year are omitted, the endpoint returns payslips from the most
+  recent month
+- The endpoint searches the last 5 payslips and filters for the most
+  recent month
+- The `net` amount is the absolute value of the NET salary line
+- `total_paid` is the sum of all net amounts for the returned payslips
+- `no_runs` indicates how many separate payslip runs occurred in the
+  month
+- Payslips are ordered by month and year in descending order
+- Month should be provided as a numeric string (e.g., "1" for January,
+  "12" for December)
+
+</div>
+
+</div>
+
+</div>
+
+<div class="oe_row oe_spaced">
+
+<div class="oe_span12">
+
+<div style="border:1px solid #ddd; border-radius:8px; padding:16px;">
+
+### 17. Payroll Get PDF
+
+URL: `/payroll/get_pdf`
+
+Generates and returns a PDF URL for one or multiple payslips. This
+endpoint validates the employee's credentials and payslip IDs, then
+constructs a URL that can be used to download or view the payslip PDF
+document(s). The PDF includes all salary details, deductions, and net
+pay information. Supports generating combined PDFs for multiple payslips
+in a single request.
+
+#### Request – Postman Body (raw → JSON)
+
+```json
+{
+    "jsonrpc": "2.0",
+    "method": "call",
+    "params": {
+        "employee_token": "jwt_token_string_here",
+        "payroll_ids": [101, 102, 103]
+    }
+}
+                
+```
+
+#### Request Parameters
+
+- **employee_token** (required): JWT authentication token
+- **payroll_ids** (required): List/Array of payslip IDs to generate PDF
+  for. Must be in list format (e.g., \[101\] or \[101, 102, 103\])
+
+#### Success Response Example (Single Payslip)
+
+```json
+{
+    "jsonrpc": "2.0",
+    "id": null,
+    "result": {
+        "status": "success",
+        "message": "Payroll Get PDF Successfully",
+        "ids": [101],
+        "url": "https://yourdomain.com/print/payslips?list_ids=101"
+    }
+}
+                
+```
+
+#### Success Response Example (Multiple Payslips)
+
+```json
+{
+    "jsonrpc": "2.0",
+    "id": null,
+    "result": {
+        "status": "success",
+        "message": "Payroll Get PDF Successfully",
+        "ids": [101, 102, 103],
+        "url": "https://yourdomain.com/print/payslips?list_ids=101,102,103"
+    }
+}
+                
+```
+
+#### Failure Responses (inside `result`)
+
+```json
+{
+    "status": "failed",
+    "message": "Authentication Token is Required."
+}
+
+{
+    "status": "failed",
+    "message": "Payslip IDs is Required."
+}
+
+{
+    "status": "failed",
+    "message": "Expired Token."
+}
+
+{
+    "status": "failed",
+    "message": "Invalid Token."
+}
+
+{
+    "status": "failed",
+    "message": "Employee Not Found."
+}
+
+{
+    "status": "failed",
+    "message": "Employee Not Registered."
+}
+
+{
+    "status": "failed",
+    "message": "Employee Already Terminated."
+}
+
+{
+    "status": "failed",
+    "message": "Employee Not Active."
+}
+
+{
+    "status": "failed",
+    "message": "The Token Doesn't Match With Current Employee Token."
+}
+
+{
+    "status": "failed",
+    "message": "Unexpected Error During Verify Token, Details: <error details>"
+}
+
+{
+    "status": "failed",
+    "message": "Invalid Payroll IDs Format, Must be in list format."
+}
+
+{
+    "status": "failed",
+    "message": "Payslip is not found."
+}
+
+{
+    "status": "failed",
+    "message": "Unexpected Error During Get PDF, Details: <error details>"
+}
+                
+```
+
+#### Notes
+
+- The `payroll_ids` parameter **must** be provided as a list/array, even
+  for a single payslip (e.g., \[101\])
+- Passing a non-list format will return an error: "Invalid Payroll IDs
+  Format, Must be in list format."
+- The response returns `ids` containing the list of found payslip IDs
+  (may differ from requested if some IDs don't exist)
+- The response returns `url` instead of `pdf_url` for the PDF download
+  link
+- When multiple IDs are provided, the system generates a combined PDF
+  containing all found payslips
+- The search uses the `in` operator to find all matching payslips
+- If none of the provided IDs are found, the request returns "Payslip is
+  not found."
+- The endpoint does not verify if the payslips belong to the
+  authenticated employee
+- The PDF URL uses the system's configured base URL from `web.base.url`
+- All found payslip IDs are included in the URL as comma-separated
+  values
+- The PDF includes formatted payslip information as configured in the
+  system
+- The PDF URL may require additional authentication depending on system
+  configuration
+- Use the `/payroll/current_month` endpoint first to get valid payslip
+  IDs
+
+</div>
+
+</div>
+
+</div>
