@@ -85,7 +85,7 @@ securely hashed and stored.
     "id": null,
     "result": {
         "status": "success",
-        "message": "Registration Successfully.",
+        "message": "Registration Application Sent Successfully, Please Wait for Approval.",
         "employee_id": 15,
         "employee_code": "EMP0015",
         "national_id": "29901012233445"
@@ -115,6 +115,11 @@ securely hashed and stored.
 {
     "status": "failed",
     "message": "Employee Code Already Registered."
+}
+
+{
+    "status": "failed",
+    "message": "Employee Code Already Registered, Please Wait for Approval."
 }
 
 {
@@ -196,6 +201,11 @@ auditing.
 {
     "status": "failed",
     "message": "Employee Code Not Found."
+}
+
+{
+    "status": "failed",
+    "message": "Employee Code Registration Request Pending, Please Wait for Approval."
 }
 
 {
