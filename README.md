@@ -857,8 +857,33 @@ come from `/employee/login`.
             "employee_id": 15,
             "employee_code": "MP0015",
             "maritalStatus": "Married",
-            "currentDetailedAddressArabic": "العنوان الحالي بالتفصيل",
-            "nationalIDDetailedAddressArabic": "عنوان البطاقة الوطنية",
+            "national_address": {
+                "full_address": "شارع 1 شارع 2 القاهرة محافظة القاهرة 12345 مصر",
+                "zip_code": "12345",
+                "street_1": "شارع 1",
+                "street_2": "شارع 2",
+                "city_id": {
+                    "id": 1,
+                    "name": "القاهرة"
+                },
+                "state_id": {
+                    "id": 1,
+                    "name": "محافظة القاهرة"
+                },
+                "country_id": {
+                    "id": 1,
+                    "name": "مصر"
+                }
+            },
+            "current_address": {
+                "full_address": "",
+                "zip_code": "",
+                "street_1": "",
+                "street_2": "",
+                "city_id": "",
+                "state_id": "",
+                "country_id": ""
+            },
             "personalMobile": "01234567890",
             "businessMobile": "01234567891",
             "militaryStatus": "Completed",
@@ -1151,8 +1176,33 @@ Returns the personal information section of the employee profile.
         "employee_id": 15,
         "employee_code": "MP0015",
         "maritalStatus": "Married",
-        "currentDetailedAddressArabic": "العنوان الحالي بالتفصيل",
-        "nationalIDDetailedAddressArabic": "عنوان البطاقة الوطنية",
+        "national_address": {
+            "full_address": "شارع 1 شارع 2 القاهرة محافظة القاهرة 12345 مصر",
+            "zip_code": "12345",
+            "street_1": "شارع 1",
+            "street_2": "شارع 2",
+            "city_id": {
+                "id": 1,
+                "name": "القاهرة"
+            },
+            "state_id": {
+                "id": 1,
+                "name": "محافظة القاهرة"
+            },
+            "country_id": {
+                "id": 1,
+                "name": "مصر"
+            }
+        },
+        "current_address": {
+            "full_address": "",
+            "zip_code": "",
+            "street_1": "",
+            "street_2": "",
+            "city_id": "",
+            "state_id": "",
+            "country_id": ""
+        },
         "personalMobile": "01234567890",
         "businessMobile": "01234567891",
         "militaryStatus": "Completed",
